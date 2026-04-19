@@ -1,0 +1,32 @@
+quran-app/
+├── backend/                # Node.js + Express API
+│   ├── data/               # Raw and Merged JSON files
+│   │   ├── ara-quran.json  # Downloaded Arabic text
+│   │   ├── eng-quran.json  # Downloaded English text
+│   │   ├── info.json       # Surah names (114 total)
+│   │   └── database.json   # GENERATED merged file (Arabic + English)
+│   ├── scripts/
+│   │   └── merge.js        # Script to combine Arabic & English
+│   ├── src/
+│   │   ├── controllers/    # Route logic (Search, Surah fetch)
+│   │   └── server.js       # Express entry point
+│   └── package.json
+│
+├── frontend/               # Next.js + Tailwind (SSG)
+│   ├── app/                
+│   │   ├── layout.tsx      # Fonts & Settings Provider
+│   │   ├── page.tsx        # Surah List Page (114 Surahs)
+│   │   ├── surah/          
+│   │   │   └── [id]/       
+│   │   │       └── page.tsx # Ayat Page (SSG)
+│   │   └── search/
+│   │       └── page.tsx    # Search Results Page
+│   ├── components/
+│   │   ├── Sidebar.tsx     # Settings Panel (Fonts/Size)
+│   │   ├── SurahCard.tsx   # Single Surah item for List
+│   │   └── VerseItem.tsx   # Arabic + English display
+│   ├── hooks/
+│   │   └── useLocalStorage.ts # Custom hook for persistence
+│   ├── tailwind.config.js  # Add Quran fonts here
+│   └── package.json
+└── README.md
