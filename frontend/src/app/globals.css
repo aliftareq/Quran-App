@@ -23,10 +23,20 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
-/* 1. LIGHT THEME COLORS (Applied when in Light Mode) */
+/* --- ADDED SCROLL BEHAVIOR --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevents verses from being hidden behind the sticky header when clicking search results */
+[id^="verse-"] {
+  scroll-margin-top: 120px;
+}
+
+/* 1. LIGHT THEME COLORS */
 :root {
   --background: #ffffff;
-  --foreground: #0d1122; /* Dark text for light mode */
+  --foreground: #0d1122;
 
   --card: #f8fafc;
   --card-foreground: #0d1122;
@@ -34,7 +44,7 @@
   --popover: #ffffff;
   --popover-foreground: #0d1122;
 
-  --primary: #ed2a3f; /* Keep your red accent */
+  --primary: #ed2a3f;
   --primary-foreground: #ffffff;
 
   --muted: #f1f5f9;
@@ -50,7 +60,7 @@
   --radius: 0.75rem;
 }
 
-/* 2. DARK THEME COLORS (Applied when in Dark Mode) */
+/* 2. DARK THEME COLORS */
 .dark {
   --background: #0d1122;
   --foreground: #f8fafc;
@@ -61,7 +71,7 @@
   --popover: #151b30;
   --popover-foreground: #f8fafc;
 
-  --primary: #ed2a3f; /* Keep your red accent */
+  --primary: #ed2a3f;
   --primary-foreground: #ffffff;
 
   --muted: #1c253d;
@@ -75,7 +85,7 @@
   --ring: #ed2a3f;
 }
 
-/* Base styles to ensure the background applies */
+/* Base styles */
 @layer base {
   * {
     @apply border-border outline-ring/50;
