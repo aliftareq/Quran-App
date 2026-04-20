@@ -3,8 +3,8 @@ import SurahDropdown from "../components/SurahDropdown";
 
 async function getData(searchQuery) {
   const url = searchQuery
-    ? `http://localhost:5000/api/search?q=${encodeURIComponent(searchQuery)}`
-    : "http://localhost:5000/api/surahs";
+    ? `https://quran-app-pearl-mu.vercel.app/api/search?q=${encodeURIComponent(searchQuery)}`
+    : "https://quran-app-pearl-mu.vercel.app/api/surahs";
 
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("Fetch failed");

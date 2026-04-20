@@ -3,8 +3,12 @@ import SurahTopBar from "@/components/SurahTopBar";
 
 async function getSurahData(id) {
   const [vRes, sRes] = await Promise.all([
-    fetch(`http://localhost:5000/api/surah/${id}`, { cache: "no-store" }),
-    fetch(`http://localhost:5000/api/surahs`, { cache: "no-store" }),
+    fetch(`https://quran-app-pearl-mu.vercel.app/api/surah/${id}`, {
+      cache: "no-store",
+    }),
+    fetch(`https://quran-app-pearl-mu.vercel.app/api/surahs`, {
+      cache: "no-store",
+    }),
   ]);
   if (!vRes.ok || !sRes.ok) throw new Error("Data fetch failed");
   const verses = await vRes.json();
