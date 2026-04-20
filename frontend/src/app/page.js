@@ -1,9 +1,9 @@
 import Link from "next/link";
+import SurahDropdown from "../components/SurahDropdown"; // Ensure this path matches where you saved it
 
-// This is a Server Component by default in the App Router
 async function getSurahs() {
   const res = await fetch("http://localhost:5000/api/surahs", {
-    next: { revalidate: 3600 }, // SSG: Re-fetch data at most once per hour
+    next: { revalidate: 3600 },
   });
 
   if (!res.ok) {
@@ -16,46 +16,80 @@ export default async function HomePage() {
   const surahs = await getSurahs();
 
   return (
-    <main className="container mx-auto px-4 py-10">
-      <header className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
-          Al-Quran Al-Kareem
+    <main className="min-h-screen bg-[#0D1122] pb-20 font-sans antialiased">
+      {/* --- HERO SECTION --- */}
+      <section className="flex flex-col items-center justify-center pt-32 pb-20 text-center px-4 bg-gradient-radial from-[#1f3352]/20 via-[#0D1122] to-[#0D1122]">
+        <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+          Read & Recite to the <br className="hidden md:block" /> Holy
+          Qur&apos;an
         </h1>
-        <p className="text-gray-600">Explore the Divine Revelation</p>
-      </header>
+        <h2 className="text-xl md:text-2xl font-semibold text-white">
+          Read Al-Qur&apos;an
+        </h2>
+      </section>
 
-      {/* Surah Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {surahs.map((surah) => (
-          <Link
-            key={surah.chapter}
-            href={`/surah/${surah.chapter}`}
-            className="group p-5 bg-white border border-gray-200 rounded-xl hover:border-emerald-500 hover:shadow-lg transition-all duration-300 flex justify-between items-center"
-          >
-            <div className="flex items-center gap-4">
-              {/* Surah Number Icon */}
-              <div className="w-10 h-10 flex items-center justify-center bg-emerald-50 text-emerald-700 font-bold rounded-lg group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                {surah.id}
+      <div className="container mx-auto px-4">
+        <header className="flex items-center justify-between py-6 border-b border-[#1f3352]/50 mb-8">
+          <h2 className="text-2xl font-bold text-white tracking-tight">
+            Select Surah
+          </h2>
+
+          {/* Dropdown Component */}
+          <SurahDropdown surahs={surahs} />
+        </header>
+
+        <div className="grid grid-cols-12 gap-5">
+          {surahs.map((surah) => (
+            <Link
+              key={surah.chapter}
+              href={`/surah/${surah.chapter}`}
+              style={{
+                background: "linear-gradient(rgb(31, 51, 82), rgb(13, 20, 44))",
+              }}
+              className="col-span-12 md:col-span-6 lg:col-span-4 group p-5 rounded-xl border border-[#1f3352] 
+                         transition-all duration-150 ease-in-out
+                         hover:border-[#C72D3C]/50 hover:shadow-2xl hover:-translate-y-1 overflow-hidden"
+            >
+              <div className="flex items-center gap-8">
+                {/* --- RED DIAMOND BOX --- */}
+                <div className="relative shrink-0 w-12 h-12 flex items-center justify-center">
+                  <div
+                    style={{ backgroundColor: "rgb(199, 45, 60)" }}
+                    className="absolute inset-0 rotate-45 rounded-sm shadow-md transition-transform duration-300 group-hover:scale-110"
+                  />
+
+                  <span className="relative z-10 text-white font-normal text-xl">
+                    {surah.chapter}
+                  </span>
+                </div>
+
+                {/* --- TEXT CONTENT --- */}
+                <div className="flex flex-1 items-center justify-between">
+                  <div className="space-y-0.5">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-[#C72D3C] transition-colors tracking-tight">
+                      {surah.name}
+                    </h3>
+                    <p className="text-xs text-[#A1A7B3] font-medium">
+                      {surah.englishname || "The Opening"}
+                    </p>
+                  </div>
+
+                  <div className="text-right space-y-0.5">
+                    <p className="text-sm font-semibold text-white/90">
+                      Juz{" "}
+                      {surah.verses && surah.verses[0]?.juz
+                        ? surah.verses[0].juz
+                        : "01"}
+                    </p>
+                    <p className="text-[11px] text-[#A1A7B3] uppercase font-bold tracking-widest">
+                      {surah?.verses?.length} Ayahs
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              <div>
-                <h2 className="text-lg font-bold text-gray-800">
-                  {surah.name}
-                </h2>
-                <p className="text-sm text-gray-500 uppercase tracking-wide">
-                  {surah.revelation_type} • {surah.verses_count} Verses
-                </p>
-              </div>
-            </div>
-
-            {/* Arabic Name */}
-            <div className="text-right">
-              <span className="text-2xl font-arabic text-emerald-600">
-                {surah.name_arabic}
-              </span>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   );

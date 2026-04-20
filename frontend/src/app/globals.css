@@ -1,26 +1,86 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 1. LIGHT THEME COLORS (Applied when in Light Mode) */
+:root {
+  --background: #ffffff;
+  --foreground: #0d1122; /* Dark text for light mode */
+
+  --card: #f8fafc;
+  --card-foreground: #0d1122;
+
+  --popover: #ffffff;
+  --popover-foreground: #0d1122;
+
+  --primary: #ed2a3f; /* Keep your red accent */
+  --primary-foreground: #ffffff;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+
+  --accent: #f1f5f9;
+  --accent-foreground: #0d1122;
+
+  --border: #e2e8f0;
+  --input: #ffffff;
+  --ring: #ed2a3f;
+
+  --radius: 0.75rem;
+}
+
+/* 2. DARK THEME COLORS (Applied when in Dark Mode) */
+.dark {
+  --background: #0d1122;
+  --foreground: #f8fafc;
+
+  --card: #151b30;
+  --card-foreground: #f8fafc;
+
+  --popover: #151b30;
+  --popover-foreground: #f8fafc;
+
+  --primary: #ed2a3f; /* Keep your red accent */
+  --primary-foreground: #ffffff;
+
+  --muted: #1c253d;
+  --muted-foreground: #a1a7b3;
+
+  --accent: #1c253d;
+  --accent-foreground: #f8fafc;
+
+  --border: #212b47;
+  --input: #151b30;
+  --ring: #ed2a3f;
+}
+
+/* Base styles to ensure the background applies */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
+  }
 }
